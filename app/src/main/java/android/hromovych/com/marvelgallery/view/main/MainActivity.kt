@@ -6,6 +6,7 @@ import android.hromovych.com.marvelgallery.model.MarvelCharacter
 import android.hromovych.com.marvelgallery.presenter.MainPresenter
 import android.hromovych.com.marvelgallery.presenter.Presenter
 import android.hromovych.com.marvelgallery.view.common.BaseActivityWithPresenter
+import android.hromovych.com.marvelgallery.view.common.addOnTextChangedListener
 import android.hromovych.com.marvelgallery.view.common.bindToSwipeRefresh
 import android.hromovych.com.marvelgallery.view.common.toast
 import android.hromovych.com.marvelgallery.view.main.main.MainView
@@ -29,6 +30,11 @@ class MainActivity : BaseActivityWithPresenter(), MainView {
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         swipeRefreshView.setOnRefreshListener {
             presenter.onRefresh()
+        }
+        searchView.addOnTextChangedListener {
+            onTextChanged{text, _, _, _->
+                presenter.onSearchChanged(text)
+            }
         }
         presenter.onViewCreated()
     }

@@ -10,6 +10,7 @@ interface MarvelApi {
     @GET("characters")
     fun getCharacters(
         @Query("offset") offset: Int?,
+        @Query("nameStartsWith") searchQuery: String?,
         @Query("limit") limit: Int?
     ): Single<DataWrapper<List<CharacterMarvelDto>>>
 }
