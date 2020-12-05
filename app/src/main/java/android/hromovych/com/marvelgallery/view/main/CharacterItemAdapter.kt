@@ -11,7 +11,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class CharacterItemAdapter(
-    val character: MarvelCharacter
+    val character: MarvelCharacter,
+    val clicked: (MarvelCharacter) -> Unit
 ) : ItemAdapter<CharacterItemAdapter.ViewHolder>(R.layout.item_character) {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -25,5 +26,6 @@ class CharacterItemAdapter(
     override fun ViewHolder.onBindViewHolder() {
         textView.text = character.name
         imageView.loadImage(character.imageUrl)
+        itemView.setOnClickListener {clicked(character)}
     }
 }

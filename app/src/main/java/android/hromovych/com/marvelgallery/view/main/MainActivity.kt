@@ -5,6 +5,7 @@ import android.hromovych.com.marvelgallery.data.MarvelRepository
 import android.hromovych.com.marvelgallery.model.MarvelCharacter
 import android.hromovych.com.marvelgallery.presenter.MainPresenter
 import android.hromovych.com.marvelgallery.presenter.Presenter
+import android.hromovych.com.marvelgallery.view.character.CharacterProfileActivity
 import android.hromovych.com.marvelgallery.view.common.BaseActivityWithPresenter
 import android.hromovych.com.marvelgallery.view.common.addOnTextChangedListener
 import android.hromovych.com.marvelgallery.view.common.bindToSwipeRefresh
@@ -40,12 +41,20 @@ class MainActivity : BaseActivityWithPresenter(), MainView {
     }
 
     override fun show(items: List<MarvelCharacter>) {
-        val categoryItemAdapter = items.map(::CharacterItemAdapter)
+        val categoryItemAdapter = items.map(this::createCategoryItemAdapter)
         recyclerView.adapter = MainListAdapter(categoryItemAdapter)
     }
 
     override fun showError(error: Throwable) {
         toast("Error: ${error.message}")
         error.printStackTrace()
+    }
+
+    private fun createCategoryItemAdapter(character: MarvelCharacter)
+            = CharacterItemAdapter(character
+    ) { showHeroProfile(character) }
+
+    private fun showHeroProfile(character: MarvelCharacter) {
+        CharacterProfileActivity.start(this, character)
     }
 }
